@@ -1,0 +1,14 @@
+.shopcard-wrapper {
+    color: rgb(228, 211, 209);
+    background-color: rgb(144, 59, 48);
+    /* border: 1px solid rgb(156, 123, 120); */
+    border-radius: 15px;
+    padding: 15px 30px;
+    margin: 40px;
+    box-shadow: 5px 5px 30px rgb(34, 30, 30);
+    transition: all ease 0.25s;
+}
+
+.shopcard-wrapper:hover {
+    transform: scale(1.015);
+}
