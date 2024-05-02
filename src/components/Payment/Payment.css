@@ -1,0 +1,23 @@
+.payment-wrapper {
+    padding: 30px;
+    display: flex;
+    color: var(--font-color);
+}
+
+.payment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-form input {
+    border: 1px solid grey;
+    margin: 10px;
+    border-radius: 5px;
+    padding: 15px 20px;
+}
+
+.line {
+    width: 1px;
+    margin: 0px 15px;
+    background-color: var(--font-color);
+}

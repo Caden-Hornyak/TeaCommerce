@@ -1,10 +1,14 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useContext } from 'react'
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { TextGeometry } from 'three/src/geometries/TextGeometry.js';
 import HelvetikerFont from "three/examples/fonts/helvetiker_regular.typeface.json";
+import { SceneContext } from './Scene';
 
-const Objects = ({ scene, objects, setObjects, setAnimations }) => {
+const Objects = ({ objects, setObjects, setAnimations }) => {
+
+    const { scene } = useContext(SceneContext);
+
     useEffect(() => {
         if (scene && !objects) {
             const objectList = {};

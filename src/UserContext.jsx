@@ -3,7 +3,7 @@ import React, { createContext, useState } from 'react';
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-  const [shoppingCart, setShoppingCart] = useState({});
+  const [shoppingCart, setShoppingCart] = useState([]);
   const [userDetails, setUserDetails] = useState({});
 
   return (

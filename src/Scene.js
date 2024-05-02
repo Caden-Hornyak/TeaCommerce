@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, createContext } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
@@ -6,6 +6,8 @@ import Objects from './Objects';
 import Animations from './Animations';
 import MainPage from './pages/MainPage';
 import gsap from 'gsap';
+
+const SceneContext = createContext();
 
 const Scene = () => {
 
@@ -83,21 +85,19 @@ const Scene = () => {
       setTeapageOpen(false);
       gsap.to(shopPageRef.current, { opacity: 0, duration: 1 });
     }
-
   }
 
   return (
-    <>
-      {teapageOpen && 
-        <div style={{opacity: 0, position: 'absolute', width: '100%', height: '100%'}} ref={shopPageRef}>
-          <MainPage />
-        </div>}
-      <Animations scene={scene} camera={camera} objects={objects} renderer={renderer} animations={animations} teapageViewable={teapageViewable}/>
+    <SceneContext.Provider value={{ camera, scene, renderer }}>
+      <div style={{opacity: 0, position: 'absolute', width: '100%', height: '100%'}} ref={shopPageRef}>
+        {teapageOpen && <MainPage />}
+      </div>
+      <Animations objects={objects} animations={animations} teapageViewable={teapageViewable}/>
 
-      <Objects scene={scene} objects={objects} setObjects={setObjects} setAnimations={setAnimations}/>
+      <Objects objects={objects} setObjects={setObjects} setAnimations={setAnimations}/>
       <canvas ref={canvasRef} style={{ width: '100%', height: '100%'}}/>
-    </>
+    </SceneContext.Provider>
   );
 }
 
-export default Scene
+export { Scene, SceneContext };

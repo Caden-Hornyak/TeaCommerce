@@ -1,0 +1,11 @@
+.orderitem-wrapper {
+    color: var(--font-color);
+    padding: 15px 30px;
+    display: flex;
+    border-bottom: 1px solid white;
+}
+
+.orderitem-wrapper > p {
+    font-weight: bold;
+    margin: 20px;
+}
