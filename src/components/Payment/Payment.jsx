@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import { UserContext } from '../../UserContext';
 import './Payment.css';
 
-const Payment = ({setOrders}) => {
+const Payment = ({setOrders, setDisplay}) => {
 
     const { shoppingCart } = useContext(UserContext);
     const [formData, setFormData] = useState({});
@@ -11,7 +11,7 @@ const Payment = ({setOrders}) => {
 
     const submitForm = (e) => {
       e.preventDefault();
-      console.log("HELLO")
+
       fetch('http://localhost/teashop/php/create_order.php', {
             method: 'POST',
             headers: {
@@ -21,8 +21,8 @@ const Payment = ({setOrders}) => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             setOrders(data);
+            setDisplay('shop');
         })
         .catch(error => {
             console.error('Error fetching products:', error);

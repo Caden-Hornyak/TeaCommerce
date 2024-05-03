@@ -5,7 +5,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import Payment from '../Payment/Payment.jsx';
 
 
-const Checkout = ({ setOrders }) => {
+const Checkout = ({ setOrders, setDisplay }) => {
 
   const { shoppingCart, setShoppingCart } = useContext(UserContext);
   const [totalPrice, setTotalPrice] = useState(null);
@@ -81,7 +81,7 @@ const Checkout = ({ setOrders }) => {
         </div>
       }
       {payDisplay === 'payment' &&
-        <Payment setOrders={setOrders}/>
+        <Payment setOrders={setOrders} setDisplay={setDisplay}/>
       }
    </>
   )

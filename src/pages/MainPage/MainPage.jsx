@@ -12,7 +12,7 @@ const MainPage = () => {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [display, setDisplay] = useState('shop');
-  
+
   useEffect(() => {
     fetch('http://localhost/teashop/php/get_products.php')
       .then(response => response.json())
@@ -22,6 +22,9 @@ const MainPage = () => {
       .catch(error => {
         console.error('Error fetching products:', error);
       });
+  }, [orders]);
+  
+  useEffect(() => {
 
     fetch('http://localhost/teashop/php/get_orders.php')
       .then(response => response.json())
@@ -50,7 +53,7 @@ const MainPage = () => {
         </div>
       }
       {display === 'checkout' &&
-        <Checkout setOrders={setOrders}/>
+        <Checkout setOrders={setOrders} setDisplay={setDisplay}/>
       }
       {display === 'register' &&
         <RegisterPage setDisplay={setDisplay}/>
