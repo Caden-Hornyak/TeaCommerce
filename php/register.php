@@ -1,30 +1,34 @@
 <?php
+
+require_once('preflight.php');
 require_once('cors.php');
 require_once('db_connection.php');
 
-$username = $_POST['username'];
-$email = $_POST['email'];
-$password = $_POST['password'];
+$data = json_decode(file_get_contents('php://input'), true);
 
-$street = $_POST['street'];
-$state = $_POST['state'];
-$country = $_POST['country'];
+$username = $data['username'];
+$email = $data['email'];
+$password = $data['password'];
 
-$fname = $_POST['fname'];
-$lname = $_POST['lname'];
-$phone_number = $_POST['phone_number'];
+$street = $data['street'];
+$state = $data['state'];
+$country = $data['country'];
+
+$fname = $data['fname'];
+$lname = $data['lname'];
+$phone_number = $data['phone'];
 
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 
-$sql = "INSERT INTO users (Email, Password, Street, State, Country, First Name, Last Name, Phone Number)
- VALUES ('$email', '$hashed_password', '$street', '$state', '$country', '$fname', '$lname', '$phone_number')";
+$sql = "INSERT INTO User (Email, `Password`, Street, `State`, Country, `First Name`, `Last Name`, `Phone Number`, Username)
+ VALUES ('$email', '$hashed_password', '$street', '$state', '$country', '$fname', '$lname', '$phone_number', '$username')";
 $result = $conn->query($sql);
 
 if ($result === TRUE) {
-    echo "Registration successful!";
+    echo json_encode(array("success" => "Account Created Successfully"));
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    echo json_encode(array("error" => "There was an error in your submission"));
 }
 
 $conn->close();

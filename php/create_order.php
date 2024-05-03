@@ -1,5 +1,6 @@
 <?php
 
+require_once('preflight.php');
 require_once('cors.php');
 require_once('db_connection.php');
 
@@ -49,7 +50,11 @@ foreach ($shopping_cart as $item_pair) {
 
     $sql_select = "SELECT ProductID FROM Product WHERE ProductID = '$productID'";
     $matchingID = $conn->query($sql_select);
+
     $price = floatval($item['Price']) * $quantity;
+
+    $sql_update = "UPDATE Product SET Stock = Stock - $quantity WHERE ProductID = '$productID'";
+    $stock_update = $conn->query($sql_update);
 
     $sql_orderitem = "INSERT INTO OrderItem (OrderID, ProductID, Quantity, Price)
     VALUES ('$order_id', '$productID', '$quantity', '$price')";

@@ -50,9 +50,8 @@ const Payment = ({setOrders}) => {
                     <input type='text' placeholder='Debit/Credit Number' name='debCredNumber' onChange={e => onFormChange(e)}/>
                     <input type='text' placeholder='CVC' name='cvc' onChange={e => onFormChange(e)}/>
                 </div>
-                <button type='submit'>Pay Now</button>
+                <button type='submit' className='payment-paybtn'>Pay Now</button>
             </form>
-            <div className='line'></div>
             <div className='payment-ordersummary'>
                 <h2>Order Summary</h2>
                 <h4>Subtotal:</h4>

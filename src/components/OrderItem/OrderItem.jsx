@@ -30,7 +30,7 @@ const OrderItem = ({ item, setOrders }) => {
       <p>Status: <span style={{margin: '0px 15px', fontWeight: 'normal'}}>{item["Status"]}</span></p>
       <p>Order ID: <span style={{margin: '0px 15px', fontWeight: 'normal'}}>{item["OrderID"]}</span></p>
       <div className='checkout-indcontainer'>
-        <button className='checkout-trashbutton' onClick={() => deleteItem()}><FaTrashAlt /></button>
+        <button className='checkout-trashbutton' style={{alignSelf: 'start'}} onClick={() => deleteItem()}><FaTrashAlt /></button>
       </div>
     </div>
   )

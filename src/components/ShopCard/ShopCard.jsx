@@ -7,7 +7,7 @@ const ShopCard = ({ item, setDisplay }) => {
         {/* <img src={teaPicture}></img> */}
         <h2>{item["Product Name"]}</h2>
         <h5>{item["Stock"]} left in stock.</h5>
-        <h2>{item["Price"]}</h2>
+        <h2>${item["Price"]} USD</h2>
     </div>
   )
 }

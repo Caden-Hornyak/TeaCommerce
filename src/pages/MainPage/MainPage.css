@@ -1,0 +1,16 @@
+:root {
+    --font-color: rgba(255, 255, 255, 0.9);
+}
+
+body {
+    margin: 0;
+    overflow-y: hidden;
+}
+
+.orders-wrapper {
+    padding: 20px 0;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    width: 100%;
+    height: calc(100% - 75px);
+}

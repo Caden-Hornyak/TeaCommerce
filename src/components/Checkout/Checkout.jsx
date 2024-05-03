@@ -51,7 +51,7 @@ const Checkout = ({ setOrders }) => {
               </div>
               <div className='checkout-indcontainer'>
                 <h4>Price</h4>
-                <p>{product['Price']}</p>
+                <p>${product['Price']} USD</p>
               </div>
               <div className='checkout-indcontainer'>
                 <h4>Quantity</h4>

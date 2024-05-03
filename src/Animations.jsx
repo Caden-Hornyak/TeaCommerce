@@ -4,68 +4,79 @@ import * as THREE from 'three';
 import { SceneContext } from './Scene';
 
 const Animations = ({ objects, animations, teapageViewable }) => {
-  const { camera, scene, renderer } = useContext(SceneContext);
+  const { camera, scene, renderer, controls } = useContext(SceneContext);
   const cameraMode = useRef(null);
 
-  if (camera) {
-    window.addEventListener('keydown', e => {
 
-      if (e.key !== 'ArrowUp' || e.repeat || cameraMode.current !== null) return;
-      cameraMode.current = 'up';
+  useEffect(() => {
+    if (camera && controls) {
+      window.addEventListener('keydown', e => {
+  
+        if (e.key !== 'ArrowUp' || e.repeat || cameraMode.current !== null) return;
+        cameraMode.current = 'up';
+        
+        
+        controls.disconnect();
 
-      gsap.to(camera.position, {
-        x: .68,
-        y: .12,
-        z: .1,
-        duration: 1.5,
-        onUpdate: function() {
-          camera.lookAt(.70, -.01, .1)
-        }
+        gsap.to(camera.position, {
+          x: .68,
+          y: .12,
+          z: .1,
+          duration: 1.5,
+          onUpdate: function() {
+            camera.lookAt(.70, -.01, .1)
+          }
+        });
+        gsap.to(camera, {
+          fov: 5,
+          delay: 1,
+          duration: 1.5,
+          ease: "power1.inOut",
+          onUpdate: function() {
+            camera.updateProjectionMatrix();
+          },
+          onComplete: function() {
+            teapageViewable(true);
+            cameraMode.current = null;
+            controls.unlock();
+          }
+        });
       });
-      gsap.to(camera, {
-        fov: 10,
-        delay: 1,
-        duration: 1.5,
-        ease: "power1.inOut",
-        onUpdate: function() {
-          camera.updateProjectionMatrix();
-        },
-        onComplete: function() {
-          teapageViewable(true);
-          cameraMode.current = null;
-        }
+  
+      window.addEventListener('keydown', e => {
+        if (e.key !== 'ArrowDown' || e.repeat || cameraMode.current !== null) return;
+        cameraMode.current = 'down';
+  
+        teapageViewable(false);
+        controls.lock();
+        gsap.to(camera.position, {
+          x: -.7,
+          y: .2,
+          z: .2,
+          delay: .25,
+          ease: "power1.in",
+          duration: 1.5,
+          onUpdate: function() {
+            camera.lookAt(.70, -.01, .1)
+          }
+        });
+        gsap.to(camera, {
+          fov: 70,
+          duration: 1.5,
+          ease: "power1.outIn",
+          onUpdate: function() {
+            camera.updateProjectionMatrix();
+          },
+          onComplete: function() {
+            cameraMode.current = null;
+            controls.connect();
+            
+          }
+        });
       });
-    });
-
-    window.addEventListener('keydown', e => {
-      if (e.key !== 'ArrowDown' || e.repeat || cameraMode.current !== null) return;
-      cameraMode.current = 'down';
-
-      teapageViewable(false);
-      gsap.to(camera.position, {
-        x: -.7,
-        y: .2,
-        z: .2,
-        delay: .25,
-        ease: "power1.in",
-        duration: 1.5,
-        onUpdate: function() {
-          camera.lookAt(.70, -.01, .1)
-        }
-      });
-      gsap.to(camera, {
-        fov: 70,
-        duration: 1.5,
-        ease: "power1.outIn",
-        onUpdate: function() {
-          camera.updateProjectionMatrix();
-        },
-        onComplete: function() {
-          cameraMode.current = null;
-        }
-      });
-    });
-  }
+    }
+  }, [camera, controls])
+  
 
   useEffect(() => {
 
@@ -83,7 +94,20 @@ const Animations = ({ objects, animations, teapageViewable }) => {
         objects['text'].rotation.z = .3 + Math.sin(t / 8) / 40;
         objects['text'].position.y = .18 + ((Math.sin(t / 2)) / 33);
 
-        animations['butterfly'].update(0.01);
+        animations['butterfly1'].update(0.01);
+        animations['butterfly2'].update(0.04);
+
+        objects['butterfly2'].position.x = .35 + Math.cos(t / 2);
+        objects['butterfly2'].position.z = .1 + Math.sin(t / 2) / 2;
+        objects['butterfly2'].position.y = .37 + (Math.cos(t / 2) / 10);
+        const direction = new THREE.Vector3(
+          .5 + Math.cos(t / 2 + Math.PI),
+          0,   
+          .5 + Math.sin(t / 2 + Math.PI) 
+      );
+      
+
+      objects['butterfly2'].lookAt(direction);
 
         renderer.render( scene, camera );
       }

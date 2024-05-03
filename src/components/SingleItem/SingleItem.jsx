@@ -27,7 +27,7 @@ const SingleItem = ({ item, setDisplay }) => {
             <img src={'/images/tea.jpg'} />
             <div className='singleitem-infoblock'>
                 <h1>{item["Product Name"]}</h1>
-                <h2>{item["Price"]}</h2>
+                <h2>${item["Price"]} USD</h2>
                 <button onClick={addToCart} className='singleitem-addtocart'>Add to Cart</button>
                 <p>{item["Description"]}</p>
             </div>

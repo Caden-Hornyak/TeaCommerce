@@ -58,25 +58,56 @@ const Objects = ({ objects, setObjects, setAnimations }) => {
             loader.load('/3d-models/animated_butterfly.glb',
                 function (gltf) {
                     let butterfly = gltf.scene;
-                    butterfly.scale.set(.2, .2, .2);
-                    objectList['butterfly'] = butterfly;
+                    butterfly.scale.set(.08, .08, .08);
+                    butterfly.position.set(0, 0, -0.1);
+
+                    objectList['butterfly1'] = butterfly;
                     scene.add(butterfly);
 
-                    // butterfly animation
+                    // butterfly animation  
                     const mixer = new THREE.AnimationMixer(butterfly);
                     const clips = gltf.animations;
 
-                    if (clips.length > 0) {
-                        const action = mixer.clipAction(clips['0']);
-                        action.play();
-                    }
+                    const action = mixer.clipAction(clips['1']);
+                    action.play();
+
+
                     setAnimations(prevState => {
                         const newState = {};
 
                         for (let key in prevState) {
                             newState[key] = prevState[key];
                         }
-                        newState['butterfly'] = mixer;
+                        newState['butterfly1'] = mixer;
+
+                        return newState;
+                    });
+                }
+            );
+
+            loader.load('/3d-models/animated_butterfly.glb',
+                function (gltf) {
+                    let butterfly = gltf.scene;
+                    butterfly.scale.set(.08, .08, .08);
+                    objectList['butterfly2'] = butterfly;
+                    scene.add(butterfly);
+
+                    // butterfly animation
+                    const mixer = new THREE.AnimationMixer(butterfly);
+                    const clips = gltf.animations;
+
+                    const action = mixer.clipAction(clips['0']);
+                    action.play();
+
+
+                    setAnimations(prevState => {
+                        const newState = {};
+
+                        for (let key in prevState) {
+                            newState[key] = prevState[key];
+                        }
+                        newState['butterfly2'] = mixer;
+
                         return newState;
                     });
                 }

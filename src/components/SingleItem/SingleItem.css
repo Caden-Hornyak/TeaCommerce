@@ -27,6 +27,7 @@
 
     padding: 15px 30px;
     transition: all ease 0.25s;
+    margin: 15px 0px;
 }
 
 .singleitem-addtocart:hover {

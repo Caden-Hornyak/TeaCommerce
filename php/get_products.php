@@ -1,5 +1,6 @@
 <?php
 
+require_once('preflight.php');
 require_once('cors.php');
 require_once('db_connection.php');
 

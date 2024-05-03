@@ -1,10 +1,9 @@
 import React, { useRef, useEffect, useState, createContext } from 'react';
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
 import Objects from './Objects';
 import Animations from './Animations';
-import MainPage from './pages/MainPage';
+import MainPage from './pages/MainPage/MainPage';
 import gsap from 'gsap';
 
 const SceneContext = createContext();
@@ -16,6 +15,7 @@ const Scene = () => {
   const [camera, setCamera] = useState(null);
   const [scene, setScene] = useState(null);
   const [renderer, setRenderer] = useState(null);
+  const [controls, setControls] = useState(null);
   
   const [teapageOpen, setTeapageOpen] = useState(false);
   const [objects, setObjects]= useState(null);
@@ -28,6 +28,7 @@ const Scene = () => {
     const resizeRenderer = () => {
       setRenderer(prevState => {
         prevState.setSize(window.innerWidth, window.innerHeight)
+        camera.updateProjectionMatrix();
         return prevState;
       });
     };
@@ -42,18 +43,21 @@ const Scene = () => {
       camera.fov = 70;
 
       setRenderer(() => {
-        const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current })
+        const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current });
         renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( renderer.domElement );
         window.addEventListener('resize', resizeRenderer);
 
         // POV controls
-        const controls = new OrbitControls(camera, renderer.domElement);
-        // renderer.domElement.addEventListener('click', () => {
-        //   controls.lock();
-        // });
-        // scene.add(controls.getObject());
-
+        setControls(() => {
+          const controls = new PointerLockControls(camera, renderer.domElement);
+          renderer.domElement.addEventListener('click', () => {
+            controls.lock();
+          });
+          scene.add(controls.getObject());
+          return controls;
+        })
+        
         return renderer;
       });
       
@@ -76,7 +80,6 @@ const Scene = () => {
     setCamera(new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 ));
   }, []);
   
-
   const teapageViewable = (viewableTo) => {
     if (viewableTo) {
       setTeapageOpen(true);
@@ -87,10 +90,17 @@ const Scene = () => {
     }
   }
 
+  const teapageOpenStyles = {
+    opacity: 0, 
+    position: 'absolute', 
+    width: '100%', 
+    height: '100%'
+  };
+
   return (
-    <SceneContext.Provider value={{ camera, scene, renderer }}>
-      <div style={{opacity: 0, position: 'absolute', width: '100%', height: '100%'}} ref={shopPageRef}>
-        {teapageOpen && <MainPage />}
+    <SceneContext.Provider value={{ camera, scene, renderer, controls }}>
+      <div style={teapageOpen ? teapageOpenStyles: undefined} ref={shopPageRef}>
+      {teapageOpen && <MainPage />}
       </div>
       <Animations objects={objects} animations={animations} teapageViewable={teapageViewable}/>
 
