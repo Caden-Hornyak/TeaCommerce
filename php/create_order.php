@@ -16,8 +16,18 @@ $delivery_status_options = array(
 );
 $delivery_status = $delivery_status_options[array_rand($delivery_status_options)];
 
+$shopping_cart = $data['shoppingCart'];
+
+$total_price = 0.0;
+
+foreach ($shopping_cart as $item_pair) {
+    $item = $item_pair['0'];
+    $quantity = $item_pair['1'];
+
+    $total_price += ($quantity * $item['Price']);
+}
+
 $current_date = date("Y-m-d");
-$total_price = 5.44;
 $sql_order = "INSERT INTO `Order` (`Date Ordered`, `Total Price`, `Status`) VALUES ('$current_date', '$total_price', '$delivery_status')";
 $order = $conn->query($sql_order);
 $order_id = $conn->insert_id;
@@ -39,8 +49,6 @@ $sql_order_details = "INSERT INTO `Order Details` (Email, Street, `State`, Count
  VALUES ('$email', '$street', '$state', '$country', '$fname', '$lname', '$phone_number', '$order_id', '$cvc', '$debcred_number')";
 $order_details = $conn->query($sql_order_details);
 
-
-$shopping_cart = $data['shoppingCart'];
 
 foreach ($shopping_cart as $item_pair) {
     $item = $item_pair['0'];

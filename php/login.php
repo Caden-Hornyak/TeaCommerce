@@ -23,7 +23,6 @@ if ($result !== False && $result->num_rows === 1) {
         
         $_SESSION['name'] = $username;
 
-
         $sql = "SELECT Email, Street, `First Name`, `Last Name`,`Phone Number`, `State`, Country, Username FROM User WHERE username = '$username'";
         $result = $conn->query($sql);
 
