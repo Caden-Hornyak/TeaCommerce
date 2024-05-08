@@ -1,6 +1,9 @@
 <?php
     session_start();
-    error_log(print_r($_SESSION, TRUE));
+    
+    if(isset($_COOKIE)) {
+        error_log(print_r($_COOKIE, TRUE));
+    }
 
     require_once('preflight.php');
     require_once('cors.php');

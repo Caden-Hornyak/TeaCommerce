@@ -28,7 +28,8 @@ const LoginPage = ({ setDisplay }) => {
     fetch('http://localhost/teashop/php/login.php', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'credentials': 'include'
         },
         body: JSON.stringify(formData)
       })

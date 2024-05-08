@@ -25,7 +25,8 @@ const Register = ({ setDisplay }) => {
         fetch('http://localhost/teashop/php/register.php', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'credentials': 'include'
             },
             body: JSON.stringify(formData)
           })
